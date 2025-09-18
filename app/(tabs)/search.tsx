@@ -1,9 +1,12 @@
-import { View, Text } from "react-native";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 
 export default function Search() {
   return (
     <View>
-      <Text style={{ color: "black" }}>Hello from search</Text>
+      <Text>Search</Text>
+      <TextInput placeholder="Search book by title.."></TextInput>
     </View>
   );
 }
+
+const styles = StyleSheet.create({});
