@@ -9,27 +9,20 @@ import { Link } from "expo-router";
 
 export default function HomeScreen() {
   return (
-    <View>
-      <Text>Hello</Text>
+    <View style={styles.libraryContainer}>
+      <ThemedText style={styles.text}>Inga böcker i biblioteket</ThemedText>
+      {/* <Text style={styles.text}>Inga böcker i biblioteket</Text> */}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
+  libraryContainer: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: "absolute",
+  text: {
+    alignSelf: "center",
   },
 });
