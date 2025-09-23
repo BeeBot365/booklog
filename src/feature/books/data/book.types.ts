@@ -13,7 +13,7 @@ export interface Author {
   name: string;
 }
 
-const mockedbooks: Book[] = [
+export const mockedbooks: Book[] = [
   {
     id: "1",
     title: "Harry Potter and the Philosopher's Stone",
