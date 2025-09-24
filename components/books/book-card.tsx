@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    height: 200,
+    height: 180,
   },
 
   image: {
@@ -82,5 +82,8 @@ const styles = StyleSheet.create({
     width: 100,
     margin: 5,
     alignSelf: "center",
+    justifyContent: "flex-end",
+    flex: 1,
+    marginBottom: 15,
   },
 });

@@ -6,7 +6,7 @@ interface Props {
   fontSize: number;
   value: string;
   borderRadius?: number;
-  onPress: () => void;
+  onPress: () => void; // Lägg till ett id här för att koppla till bok.
 }
 export default function Button(props: Props) {
   let backgroundColor: string;
