@@ -1,6 +1,8 @@
 import { useBooksContext } from "@/providers/books-provider";
 import { useLocalSearchParams } from "expo-router";
 import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
+import * as WebBrowser from "expo-web-browser";
+import Button from "@/components/ui/button";
 // importera Book-typ och eventuell datakälla/context här
 
 export default function DetailsScreen() {
@@ -25,7 +27,16 @@ export default function DetailsScreen() {
       <Text style={styles.description}>
         {book.description ?? "Ingen beskrivning."}
       </Text>
-      {/* Dina knappar etc */}
+      {book.infoUrl && (
+        <Button
+          variant={"green"}
+          padding={5}
+          fontSize={16}
+          value={"Öppna i webbläsaren"}
+          borderRadius={10}
+          onPress={async () => WebBrowser.openBrowserAsync(book.infoUrl)}
+        />
+      )}
     </ScrollView>
   );
 }
