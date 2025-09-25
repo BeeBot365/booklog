@@ -18,9 +18,10 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="library"
+        name="Library"
         options={{
           title: "Library",
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="home" size={size} color={color} />
           ),
@@ -29,7 +30,6 @@ export default function TabLayout() {
       <Tabs.Screen
         name="Search"
         options={{
-          headerShown: false,
           title: "Search",
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="search" size={size} color={color} />

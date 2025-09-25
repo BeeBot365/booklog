@@ -3,8 +3,9 @@ import { HelloWave } from "@/components/hello-wave";
 import ParallaxScrollView from "@/components/parallax-scroll-view";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { useBooksContext } from "@/providers/books-provider";
+import BookCard from "@/components/books/book-card";
 
 export default function HomeScreen() {
   const { books } = useBooksContext();
@@ -18,16 +19,30 @@ export default function HomeScreen() {
   }
   return (
     <View style={styles.libraryContainer}>
+      <Text style={styles.text}>Dina böcker</Text>
       <FlatList
         data={books}
         keyExtractor={(item) => item.id}
+        numColumns={2}
+        columnWrapperStyle={{ justifyContent: "center" }}
+        contentContainerStyle={styles.listContent}
         renderItem={({ item }) => (
-          <View>
-            <ThemedText>{item.title}</ThemedText>
-            <ThemedText>
-              {item.authors.map((author) => author.name).join(", ")}
-            </ThemedText>
-          </View>
+          <BookCard
+            book={item}
+            buttons={[
+              {
+                variant: "blue",
+                padding: 0,
+                fontSize: 16,
+                value: "Läs mer",
+                borderRadius: 5,
+                onPress: () => {
+                  router.push(`/Library/${item.id}`);
+                  console.log("Navigation not implemented");
+                }, //goToDetails(item.id), // Din navigering
+              },
+            ]}
+          ></BookCard>
         )}
       />
     </View>
@@ -42,5 +57,13 @@ const styles = StyleSheet.create({
   },
   text: {
     alignSelf: "center",
+    fontWeight: "bold",
+    fontSize: 20,
+    fontFamily: "helvetica",
+    marginVertical: 10,
+    textDecorationLine: "underline",
+  },
+  listContent: {
+    paddingBottom: 24,
   },
 });
