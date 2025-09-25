@@ -27,11 +27,12 @@ export async function getBookById(db: SQLite.SQLiteDatabase, id: string) {
 export async function addBook(db: SQLite.SQLiteDatabase, book: Book) {
   try {
     const result = await db.runAsync(
-      `INSERT INTO books (id, title, author, imageUrl, infoUrl, numberOfPages)` +
-        `VALUES (?, ?, ?, ?, ?, ?);`,
+      `INSERT INTO books (id, title, description, author, imageUrl, infoUrl, numberOfPages)` +
+        `VALUES (?, ?, ?, ?, ?, ?, ?);`,
       [
         book.id,
         book.title,
+        book.description,
         book.authors.map((author) => author.name).join(", "),
         book.imageUrl,
         book.infoUrl,
@@ -54,6 +55,7 @@ function mapDbBookToBook(dbBook: DbBook): Book {
   return {
     id: dbBook.id,
     title: dbBook.title,
+    description: dbBook.description,
     authors: dbBook.authors
       ? dbBook.authors.split(", ").map((name) => ({ name }))
       : [],

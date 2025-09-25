@@ -1,7 +1,5 @@
 import * as SQLite from "expo-sqlite";
 export async function initDatabase(db: SQLite.SQLiteDatabase) {
-  // Vill droppa alla tables innan jag gör dom.
-
   // Skapa tabellerna som du behöver om det inte finns redan.
 
   await db.execAsync(
@@ -12,6 +10,7 @@ export async function initDatabase(db: SQLite.SQLiteDatabase) {
     CREATE TABLE IF NOT EXISTS books (
           id TEXT PRIMARY KEY NOT NULL,
           title TEXT NOT NULL,
+          description TEXT NOT NULL,
           author TEXT NOT NULL,
           imageUrl TEXT NOT NULL,
           infoUrl TEXT NOT NULL,
