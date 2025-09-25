@@ -3,11 +3,13 @@ import { View, StyleSheet, Image, Text, Pressable } from "react-native";
 import { ThemedText } from "../themed-text";
 import Button from "../ui/button";
 import BooksProvider, { useBooksContext } from "@/providers/books-provider";
+import { ButtonObject } from "../ui/button";
 
 interface Props {
   book: Book;
+  buttons: ButtonObject[];
 }
-export default function BookCard({ book }: Props) {
+export default function BookCard({ book, buttons }: Props) {
   const { addBookToContext } = useBooksContext();
   return (
     <View style={styles.cardContainer}>
@@ -23,28 +25,9 @@ export default function BookCard({ book }: Props) {
         <Text>{book.authors.map((author) => author.name).join(", ")}</Text>
       </View>
       <View style={styles.buttonContainer}>
-        <Button
-          id={book.id}
-          variant={"blue"}
-          padding={0}
-          fontSize={16}
-          value={"Läs mer"}
-          borderRadius={5}
-          onPress={function (): void {
-            throw new Error("Function not implemented.");
-          }}
-        ></Button>
-        <Button
-          id={book.id}
-          variant={"gray"}
-          padding={0}
-          fontSize={16}
-          borderRadius={5}
-          value={"Lägg till"}
-          onPress={() => {
-            addBookToContext(book);
-          }}
-        ></Button>
+        {buttons.map((button, index) => (
+          <Button key={index} {...button} />
+        ))}
       </View>
     </View>
   );

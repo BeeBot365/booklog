@@ -1,15 +1,14 @@
 import { Pressable, Text } from "react-native";
-
-interface Props {
-  id: string;
-  variant: "red" | "blue" | "green" | "gray";
+export interface ButtonObject {
+  variant: "blue" | "gray" | "red" | "green";
   padding: number;
   fontSize: number;
   value: string;
-  borderRadius?: number;
-  onPress: (id: string) => void; // Lägg till ett id här för att koppla till bok.
+  borderRadius: number;
+  onPress: () => void;
 }
-export default function Button(props: Props) {
+
+export default function Button(props: ButtonObject) {
   let backgroundColor: string;
   switch (props.variant) {
     case "red":
@@ -28,7 +27,7 @@ export default function Button(props: Props) {
 
   return (
     <Pressable
-      onPress={() => props.onPress(props.id)}
+      onPress={props.onPress}
       style={{
         backgroundColor: backgroundColor,
         padding: props.padding,
