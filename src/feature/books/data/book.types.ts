@@ -13,6 +13,15 @@ export interface Author {
   name: string;
 }
 
+export interface DbBook {
+  id: string;
+  title: string;
+  authors: string;
+  imageUrl: string;
+  infoUrl: string;
+  numberOfPages: number;
+}
+
 export const mockedbooks: Book[] = [
   {
     id: "1",

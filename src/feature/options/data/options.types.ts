@@ -1,6 +1,6 @@
 // Interface för options
 
-interface Option {
+export interface Option {
   id: string;
   goalPerDay: number;
   reminderTime: Date;
