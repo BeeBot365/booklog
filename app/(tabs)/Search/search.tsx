@@ -2,14 +2,7 @@ import BookCard from "@/components/books/book-card";
 import { ThemedText } from "@/components/themed-text";
 import { mockedbooks } from "@/src/feature/books/data/book.types";
 import { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  ScrollView,
-  FlatList,
-} from "react-native";
+import { View, TextInput, StyleSheet, FlatList } from "react-native";
 
 export default function Search() {
   const [value, setValue] = useState<string>("");
