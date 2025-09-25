@@ -12,6 +12,7 @@ import {
 interface ContextValue {
   books: Book[];
   addBookToContext: (book: Book) => void;
+  getbookById: (id: string) => Book | undefined;
 }
 
 //Skapa kontexten.
@@ -47,8 +48,13 @@ export default function BooksProvider(props: PropsWithChildren) {
     }
   };
 
+  // Metod för att hämta en bok
+  const getbookById = (id: string) => {
+    return books.find((book) => book.id === id);
+  };
+
   return (
-    <bookContext.Provider value={{ books, addBookToContext }}>
+    <bookContext.Provider value={{ books, addBookToContext, getbookById }}>
       {props.children}
     </bookContext.Provider>
   );
