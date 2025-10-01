@@ -47,7 +47,16 @@ export async function addBook(db: SQLite.SQLiteDatabase, book: Book) {
 
 //Ta bort en bok.
 export async function deleteBook(db: SQLite.SQLiteDatabase, id: string) {
-  const result = await db.runAsync(`DELETE FROM books WHERE id = ?;`, [id]);
+  try {
+    const result = await db.runAsync(`DELETE FROM books WHERE id = ?;`, [id]);
+    if (!result || result.changes <= 0) {
+      return false;
+    }
+    console.log("Book deleted with id:", id);
+    return true;
+  } catch (error) {
+    console.error("Error deleting book:", error);
+  }
 }
 
 // Mappa om Från objekt jag får från databasen till Book interface.

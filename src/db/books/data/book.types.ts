@@ -10,6 +10,8 @@ export interface Book {
   numberOfPages: number;
 }
 
+// Lägg till releaseDate
+
 export interface Author {
   name: string;
 }
