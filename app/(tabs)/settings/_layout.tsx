@@ -7,7 +7,6 @@ export default function SearchLayout() {
         name="index"
         options={{ title: "Settings", headerShown: true }}
       />
-      <Stack.Screen name="[id]" options={(props) => ({ headerShown: true })} />
     </Stack>
   );
 }
