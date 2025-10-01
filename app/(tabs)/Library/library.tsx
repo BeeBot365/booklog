@@ -38,8 +38,7 @@ export default function HomeScreen() {
                 borderRadius: 5,
                 onPress: () => {
                   router.push(`/Library/${item.id}`);
-                  console.log("Navigation not implemented");
-                }, //goToDetails(item.id), // Din navigering
+                },
               },
             ]}
           ></BookCard>
