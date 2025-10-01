@@ -4,7 +4,7 @@ export default function SearchLayout() {
   return (
     <Stack>
       <Stack.Screen
-        name="search"
+        name="index"
         options={{ title: "Sök", headerShown: true }}
       />
       <Stack.Screen name="[id]" options={(props) => ({ headerShown: true })} />

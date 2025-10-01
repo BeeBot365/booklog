@@ -9,12 +9,14 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: "#185abc",
         headerShown: true,
+        tabBarShowLabel: false,
         tabBarButton: HapticTab,
       }}
     >
       <Tabs.Screen
-        name="Library"
+        name="library"
         options={{
+          tabBarShowLabel: false,
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="home" size={size} color={color} />
@@ -22,8 +24,9 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="Search"
+        name="search"
         options={{
+          tabBarShowLabel: false,
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="search" size={size} color={color} />

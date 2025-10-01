@@ -4,7 +4,7 @@ export default function LibraryLayout() {
   return (
     <Stack>
       <Stack.Screen
-        name="library"
+        name="index"
         options={{ headerShown: true, title: "Bibliotek" }}
       />
       <Stack.Screen name="[id]" options={(props) => ({ headerShown: true })} />

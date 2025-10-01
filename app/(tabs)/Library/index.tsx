@@ -74,7 +74,7 @@ export default function HomeScreen() {
                 value: "Läs mer",
                 borderRadius: 5,
                 onPress: () => {
-                  router.push(`/Library/${item.id}`);
+                  router.push(`/library/${item.id}`);
                 },
               },
             ]}

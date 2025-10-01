@@ -14,7 +14,7 @@ export default function DetailsScreen() {
   const [selectedBook, setSelectedBook] = useState(book);
   useEffect(() => {
     if (!book) {
-      router.replace("/(tabs)/Library/library");
+      router.replace("/(tabs)/library/index");
     } else {
       setSelectedBook(book);
       nav.setOptions({ title: selectedBook?.title });
@@ -63,7 +63,7 @@ export default function DetailsScreen() {
         borderRadius={10}
         onPress={() => {
           router.push({
-            pathname: "/Library/delete-book",
+            pathname: "/library/delete-book",
             params: { id: book.id },
           });
           console.log("Tryck på ta bort bok");
