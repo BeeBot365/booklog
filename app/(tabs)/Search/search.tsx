@@ -1,15 +1,20 @@
+import { router } from "expo-router";
 import BookCard from "@/components/books/book-card";
-import { ThemedText } from "@/components/themed-text";
-import { ButtonObject } from "@/components/ui/button";
 import { useBooksContext } from "@/providers/books-provider";
-import { mockedbooks } from "@/src/feature/books/data/book.types";
+import { mockedbooks } from "@/src/db/books/data/book.types";
 import { useState } from "react";
-import { View, TextInput, StyleSheet, FlatList } from "react-native";
+import { FlatList, StyleSheet, TextInput, View } from "react-native";
+import * as Haptics from "expo-haptics";
+import Toast from "react-native-toast-message";
 
 export default function SearchScreen() {
-  const { addBookToContext } = useBooksContext();
+  const { addBookToContext, books } = useBooksContext();
   const [value, setValue] = useState<string>("");
-  const books = mockedbooks;
+  const [filteredBooks, setFilteredBooks] = useState(mockedbooks);
+  function filterBooks(id: string) {
+    const filtered = filteredBooks.filter((b) => b.id !== id);
+    setFilteredBooks(filtered);
+  }
 
   return (
     <View style={styles.container}>
@@ -18,10 +23,13 @@ export default function SearchScreen() {
         placeholder="Search book by title.."
         placeholderTextColor="#888"
         onChangeText={setValue}
+        onSubmitEditing={() => {
+          console.log("Searching for:", value);
+        }}
         value={value}
       ></TextInput>
       <FlatList
-        data={books}
+        data={filteredBooks}
         horizontal={false}
         keyExtractor={(item) => item.id}
         columnWrapperStyle={{ justifyContent: "center" }}
@@ -47,7 +55,17 @@ export default function SearchScreen() {
                 fontSize: 16,
                 value: "Lägg till",
                 borderRadius: 5,
-                onPress: () => addBookToContext(item),
+                onPress: async () => {
+                  addBookToContext(item);
+                  filterBooks(item.id);
+                  await Toast.show({
+                    type: "success",
+                    text1: `${item.title} är tillagd i ditt bibliotek`,
+                  });
+                  await Haptics.notificationAsync(
+                    Haptics.NotificationFeedbackType.Success
+                  );
+                },
               },
             ]}
           />
