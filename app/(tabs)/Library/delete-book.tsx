@@ -43,7 +43,8 @@ export default function DeleteModal() {
                 position: "top",
                 visibilityTime: 4000,
               });
-              router.back();
+              router.dismissAll();
+              router.replace("/(tabs)/library");
             }
           }}
         ></Button>
