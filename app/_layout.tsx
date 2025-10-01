@@ -10,6 +10,7 @@ import { SQLiteProvider } from "expo-sqlite";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { initDatabase } from "@/src/db/db";
 import BooksProvider from "@/providers/books-provider";
+import Toast from "react-native-toast-message";
 
 export const unstable_settings = {
   anchor: "(tabs)",
@@ -27,6 +28,7 @@ export default function RootLayout() {
           <Stack>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           </Stack>
+          <Toast />
           <StatusBar style="auto" />
         </ThemeProvider>
       </BooksProvider>
