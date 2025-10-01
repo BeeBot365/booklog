@@ -3,8 +3,11 @@ import { Stack } from "expo-router";
 export default function LibraryLayout() {
   return (
     <Stack>
-      <Stack.Screen name="library" options={{ title: "Library" }} />
-      <Stack.Screen name="[id]" options={{ title: "Details" }} />
+      <Stack.Screen
+        name="library"
+        options={{ headerShown: true, title: "Bibliotek" }}
+      />
+      <Stack.Screen name="[id]" options={(props) => ({ headerShown: true })} />
       <Stack.Screen
         name="delete-book"
         options={{
