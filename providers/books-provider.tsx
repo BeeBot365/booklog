@@ -1,5 +1,9 @@
-import { getAllBooks, addBook } from "@/src/feature/books/data/book.repo";
-import { Book } from "@/src/feature/books/data/book.types";
+import {
+  addBook,
+  deleteBook,
+  getAllBooks,
+} from "@/src/db/books/data/book.repo";
+import { Book } from "@/src/db/books/data/book.types";
 import { useSQLiteContext } from "expo-sqlite";
 import {
   createContext,
@@ -13,6 +17,7 @@ interface ContextValue {
   books: Book[];
   addBookToContext: (book: Book) => void;
   getbookById: (id: string) => Book | undefined;
+  deleteBookFromContext: (id: string) => Promise<Book | null | undefined>;
 }
 
 //Skapa kontexten.
@@ -53,8 +58,28 @@ export default function BooksProvider(props: PropsWithChildren) {
     return books.find((book) => book.id === id);
   };
 
+  //Metod för att ta bort en bok
+  const deleteBookFromContext = async (id: string) => {
+    try {
+      const book = getbookById(id);
+      if (!book) return null;
+
+      const result = await deleteBook(db, book.id);
+      if (result) {
+        setBooks((prevBooks) => prevBooks.filter((b) => b.id !== book.id));
+        console.log("Book deleted from context:", book.id);
+        return book;
+      }
+      return null;
+    } catch (error) {
+      console.error("Error deleting book:", error);
+    }
+  };
+
   return (
-    <bookContext.Provider value={{ books, addBookToContext, getbookById }}>
+    <bookContext.Provider
+      value={{ books, addBookToContext, getbookById, deleteBookFromContext }}
+    >
       {props.children}
     </bookContext.Provider>
   );
