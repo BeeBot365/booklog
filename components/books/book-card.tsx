@@ -1,9 +1,7 @@
-import { Book } from "@/src/feature/books/data/book.types";
-import { View, StyleSheet, Image, Text, Pressable } from "react-native";
-import { ThemedText } from "../themed-text";
-import Button from "../ui/button";
-import BooksProvider, { useBooksContext } from "@/providers/books-provider";
-import { ButtonObject } from "../ui/button";
+import { useBooksContext } from "@/providers/books-provider";
+import { Book } from "@/src/db/books/data/book.types";
+import { Image, StyleSheet, Text, View } from "react-native";
+import Button, { ButtonObject } from "../ui/button";
 
 interface Props {
   book: Book;
