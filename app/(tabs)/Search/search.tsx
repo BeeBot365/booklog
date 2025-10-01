@@ -2,7 +2,7 @@ import { router } from "expo-router";
 import BookCard from "@/components/books/book-card";
 import { useBooksContext } from "@/providers/books-provider";
 import { mockedbooks } from "@/src/db/books/data/book.types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, TextInput, View } from "react-native";
 import * as Haptics from "expo-haptics";
 import Toast from "react-native-toast-message";
@@ -46,8 +46,12 @@ export default function SearchScreen() {
                 value: "Läs mer",
                 borderRadius: 5,
                 onPress: () => {
-                  throw new Error("Navigation not implemented");
-                }, //goToDetails(item.id)
+                  console.log("Go to details for:", item.id);
+                  router.push({
+                    pathname: "/Search/[id]",
+                    params: { id: item.id },
+                  });
+                },
               },
               {
                 variant: "gray",
