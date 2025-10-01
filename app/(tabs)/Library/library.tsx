@@ -1,19 +1,39 @@
-import { Platform, StyleSheet, View, Text, FlatList } from "react-native";
-import { HelloWave } from "@/components/hello-wave";
-import ParallaxScrollView from "@/components/parallax-scroll-view";
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
+import { StyleSheet, View, Text, FlatList, Modal } from "react-native";
+
 import { Link, router } from "expo-router";
 import { useBooksContext } from "@/providers/books-provider";
 import BookCard from "@/components/books/book-card";
+import { isFirstLaunched } from "@/src/securestore/launched";
+import { useEffect, useState } from "react";
+import Button from "@/components/ui/button";
 
 export default function HomeScreen() {
   const { books } = useBooksContext();
+  const [showReminderModal, setShowReminderModal] = useState(false);
+
+  useEffect(() => {
+    // Kollar om det är första gången appen startar
+    async function checkFirstLaunch() {
+      const firstLaunch = await isFirstLaunched();
+      if (firstLaunch) {
+        console.log("Första gången appen startar");
+        setShowReminderModal(true);
+      }
+    }
+    checkFirstLaunch();
+  }, []);
 
   if (books.length === 0 || !books) {
     return (
       <View style={styles.libraryContainer}>
-        <ThemedText style={styles.text}>Inga böcker i biblioteket</ThemedText>
+        {/* <Text style={styles.text}>Dina böcker</Text> */}
+        {/* <Modal visible={showReminderModal} animationType="slide">
+          <View>
+            <Button variant="blue" value="Ja"></Button>
+            <Button variant="red" value"Nej"></Button>
+          </View>
+        </Modal> */}
+        <Text style={styles.text}>Inga böcker i biblioteket</Text>
       </View>
     );
   }
