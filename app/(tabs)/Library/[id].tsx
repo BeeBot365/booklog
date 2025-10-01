@@ -1,25 +1,33 @@
 import { useBooksContext } from "@/providers/books-provider";
-import { Link, router, useLocalSearchParams, useNavigation } from "expo-router";
+import {
+  Link,
+  router,
+  useLocalSearchParams,
+  useNavigation,
+  useRouter,
+} from "expo-router";
 import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 import * as WebBrowser from "expo-web-browser";
 import Button from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Book, mockedbooks } from "@/src/db/books/data/book.types";
 
 export default function DetailsScreen() {
   const { id } = useLocalSearchParams();
   const { getbookById } = useBooksContext();
+  const [book, setBook] = useState<Book>();
   const nav = useNavigation();
+  const router = useRouter();
   //Hämtar boken och om boken inte existerar så navigerar vi tillbaka.
-  const book = getbookById(id as string);
-  const [selectedBook, setSelectedBook] = useState(book);
   useEffect(() => {
+    const book = mockedbooks.find((b) => b.id === id);
     if (!book) {
-      router.replace("/(tabs)/library/index");
-    } else {
-      setSelectedBook(book);
-      nav.setOptions({ title: selectedBook?.title });
+      router.back();
+      return;
     }
-  }, [book]);
+    setBook(book);
+    nav.setOptions({ title: book.title });
+  }, []);
 
   if (!book) {
     return null;
