@@ -14,7 +14,7 @@ export async function initDatabase(db: SQLite.SQLiteDatabase) {
           author TEXT NOT NULL,
           imageUrl TEXT NOT NULL,
           infoUrl TEXT NOT NULL,
-          numberofPages INTEGER
+          numberOfPages INTEGER
         );
     CREATE TABLE IF NOT EXISTS readingEntries (
             id TEXT PRIMARY KEY NOT NULL,
