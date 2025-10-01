@@ -11,6 +11,15 @@ export default function SearchScreen() {
   const { addBookToContext, books } = useBooksContext();
   const [value, setValue] = useState<string>("");
   const [filteredBooks, setFilteredBooks] = useState(mockedbooks);
+
+  // Jämför vilka böcker man redan har i sitt bibliotek.
+  useEffect(() => {
+    const filtered = mockedbooks.filter(
+      (b) => !books.some((x) => x.id === b.id)
+    );
+    setFilteredBooks(filtered);
+  }, [books, mockedbooks]);
+
   function filterBooks(id: string) {
     const filtered = filteredBooks.filter((b) => b.id !== id);
     setFilteredBooks(filtered);
