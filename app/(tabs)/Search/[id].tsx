@@ -41,33 +41,35 @@ export default function DetailsScreen() {
       <Text style={styles.description}>
         {book.description ?? "Ingen beskrivning."}
       </Text>
-      {book.infoUrl && (
+      <View style={styles.buttonContainer}>
+        {book.infoUrl && (
+          <Button
+            variant={"gray"}
+            padding={10}
+            fontSize={16}
+            value={"Öppna i webbläsaren"}
+            borderRadius={10}
+            onPress={async () => WebBrowser.openBrowserAsync(book.infoUrl)}
+          />
+        )}
+
         <Button
-          variant={"green"}
+          variant="gray"
           padding={10}
           fontSize={16}
-          value={"Öppna i webbläsaren"}
+          value={"Lägg till bok"}
           borderRadius={10}
-          onPress={async () => WebBrowser.openBrowserAsync(book.infoUrl)}
+          onPress={() => {
+            addBookToContext(book);
+            Toast.show({
+              type: "success",
+              text1: "Boken är tillagd i din bokhylla",
+            });
+            router.back();
+            console.log("Tryck på lägg till bok");
+          }}
         />
-      )}
-
-      <Button
-        variant="gray"
-        padding={10}
-        fontSize={16}
-        value={"Lägg till bok"}
-        borderRadius={10}
-        onPress={() => {
-          addBookToContext(book);
-          Toast.show({
-            type: "success",
-            text1: "Boken är tillagd i din bokhylla",
-          });
-          router.back();
-          console.log("Tryck på lägg till bok");
-        }}
-      />
+      </View>
     </ScrollView>
   );
 }
@@ -80,7 +82,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
-  cover: { width: 150, height: 220, borderRadius: 8, marginBottom: 14 },
+  cover: {
+    width: 150,
+    height: 220,
+    borderRadius: 8,
+    marginBottom: 14,
+  },
   title: {
     fontSize: 22,
     fontWeight: "bold",
@@ -98,5 +105,11 @@ const styles = StyleSheet.create({
     color: "#333",
     marginBottom: 16,
     textAlign: "center",
+  },
+  buttonContainer: {
+    flexDirection: "column",
+    justifyContent: "space-between",
+    width: "70%",
+    gap: 5,
   },
 });

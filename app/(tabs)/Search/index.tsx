@@ -49,7 +49,7 @@ export default function SearchScreen() {
             book={item}
             buttons={[
               {
-                variant: "blue",
+                variant: "gray",
                 padding: 0,
                 fontSize: 16,
                 value: "Läs mer",
@@ -57,7 +57,7 @@ export default function SearchScreen() {
                 onPress: () => {
                   console.log("Go to details for:", item.id);
                   router.push({
-                    pathname: "/Search/[id]",
+                    pathname: "/search/[id]",
                     params: { id: item.id },
                   });
                 },
