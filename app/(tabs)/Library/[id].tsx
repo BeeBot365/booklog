@@ -1,5 +1,5 @@
 import { useBooksContext } from "@/providers/books-provider";
-import { Link, router, useLocalSearchParams } from "expo-router";
+import { Link, router, useLocalSearchParams, useNavigation } from "expo-router";
 import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 import * as WebBrowser from "expo-web-browser";
 import Button from "@/components/ui/button";
@@ -8,12 +8,16 @@ import { useEffect, useState } from "react";
 export default function DetailsScreen() {
   const { id } = useLocalSearchParams();
   const { getbookById } = useBooksContext();
-
+  const nav = useNavigation();
   //Hämtar boken och om boken inte existerar så navigerar vi tillbaka.
   const book = getbookById(id as string);
+  const [selectedBook, setSelectedBook] = useState(book);
   useEffect(() => {
     if (!book) {
       router.replace("/(tabs)/Library/library");
+    } else {
+      setSelectedBook(book);
+      nav.setOptions({ title: selectedBook?.title });
     }
   }, [book]);
 
