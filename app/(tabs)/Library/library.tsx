@@ -3,7 +3,11 @@ import { StyleSheet, View, Text, FlatList, Modal } from "react-native";
 import { Link, router } from "expo-router";
 import { useBooksContext } from "@/providers/books-provider";
 import BookCard from "@/components/books/book-card";
-import { isFirstLaunched } from "@/src/securestore/launched";
+import {
+  setHasLaunched,
+  gethasLaunched,
+  resetHasLaunched,
+} from "@/src/securestore/launched";
 import { useEffect, useState } from "react";
 import Button from "@/components/ui/button";
 
@@ -14,31 +18,44 @@ export default function HomeScreen() {
   useEffect(() => {
     // Kollar om det är första gången appen startar
     async function checkFirstLaunch() {
-      const firstLaunch = await isFirstLaunched();
-      if (firstLaunch) {
-        console.log("Första gången appen startar");
+      // await resetHasLaunched();
+      const firstLaunch = await gethasLaunched();
+      if (!firstLaunch) {
         setShowReminderModal(true);
       }
     }
     checkFirstLaunch();
   }, []);
 
-  if (books.length === 0 || !books) {
-    return (
-      <View style={styles.libraryContainer}>
-        {/* <Text style={styles.text}>Dina böcker</Text> */}
-        {/* <Modal visible={showReminderModal} animationType="slide">
-          <View>
-            <Button variant="blue" value="Ja"></Button>
-            <Button variant="red" value"Nej"></Button>
-          </View>
-        </Modal> */}
-        <Text style={styles.text}>Inga böcker i biblioteket</Text>
-      </View>
-    );
-  }
   return (
     <View style={styles.libraryContainer}>
+      <Modal visible={showReminderModal} animationType="slide">
+        <View style={{ flex: 1, justifyContent: "center", padding: 24 }}>
+          <Text> Vill du ställa in en tid för läspåminnelse?</Text>
+          <Button
+            variant="blue"
+            value="Ja"
+            padding={10}
+            fontSize={16}
+            borderRadius={10}
+            onPress={async () => {
+              setShowReminderModal(false);
+              await setHasLaunched();
+            }}
+          ></Button>
+          <Button
+            variant="red"
+            value="Nej"
+            padding={10}
+            fontSize={16}
+            borderRadius={10}
+            onPress={async () => {
+              setShowReminderModal(false);
+              await setHasLaunched();
+            }}
+          ></Button>
+        </View>
+      </Modal>
       <Text style={styles.text}>Dina böcker</Text>
       <FlatList
         data={books}
@@ -70,9 +87,9 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   libraryContainer: {
-    width: "100%",
-    height: "100%",
+    flex: 1,
     justifyContent: "center",
+    alignContent: "center",
   },
   text: {
     alignSelf: "center",
