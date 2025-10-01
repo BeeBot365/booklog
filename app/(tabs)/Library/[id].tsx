@@ -4,12 +4,10 @@ import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 import * as WebBrowser from "expo-web-browser";
 import Button from "@/components/ui/button";
 import { useEffect, useState } from "react";
-// importera Book-typ och eventuell datakälla/context här
 
 export default function DetailsScreen() {
   const { id } = useLocalSearchParams();
   const { getbookById } = useBooksContext();
-  const [open, setOpen] = useState<Boolean>(false);
 
   //Hämtar boken och om boken inte existerar så navigerar vi tillbaka.
   const book = getbookById(id as string);
@@ -36,7 +34,7 @@ export default function DetailsScreen() {
       {book.infoUrl && (
         <Button
           variant={"green"}
-          padding={5}
+          padding={10}
           fontSize={16}
           value={"Öppna i webbläsaren"}
           borderRadius={10}
@@ -45,8 +43,17 @@ export default function DetailsScreen() {
       )}
 
       <Button
+        variant="gray"
+        value="Börja logga boken"
+        padding={10}
+        fontSize={16}
+        borderRadius={10}
+        onPress={() => {}}
+      />
+
+      <Button
         variant="red"
-        padding={5}
+        padding={10}
         fontSize={16}
         value={"Ta bort boken"}
         borderRadius={10}
