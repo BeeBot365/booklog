@@ -18,7 +18,7 @@ export default function HomeScreen() {
   useEffect(() => {
     // Kollar om det är första gången appen startar
     async function checkFirstLaunch() {
-      // await resetHasLaunched();
+      await resetHasLaunched();
       const firstLaunch = await gethasLaunched();
       if (!firstLaunch) {
         setShowReminderModal(true);
@@ -30,30 +30,39 @@ export default function HomeScreen() {
   return (
     <View style={styles.libraryContainer}>
       <Modal visible={showReminderModal} animationType="slide">
-        <View style={{ flex: 1, justifyContent: "center", padding: 24 }}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <Text> Vill du ställa in en tid för läspåminnelse?</Text>
-          <Button
-            variant="blue"
-            value="Ja"
-            padding={10}
-            fontSize={16}
-            borderRadius={10}
-            onPress={async () => {
-              setShowReminderModal(false);
-              await setHasLaunched();
-            }}
-          ></Button>
-          <Button
-            variant="red"
-            value="Nej"
-            padding={10}
-            fontSize={16}
-            borderRadius={10}
-            onPress={async () => {
-              setShowReminderModal(false);
-              await setHasLaunched();
-            }}
-          ></Button>
+          <View style={styles.buttonContainer}>
+            <Button
+              variant="gray"
+              value="Ja"
+              padding={10}
+              fontSize={16}
+              borderRadius={10}
+              onPress={async () => {
+                setShowReminderModal(false);
+                await setHasLaunched();
+                router.push("/(tabs)/settings");
+              }}
+            ></Button>
+            <Button
+              variant="gray"
+              value="Nej"
+              padding={10}
+              fontSize={16}
+              borderRadius={10}
+              onPress={async () => {
+                setShowReminderModal(false);
+                await setHasLaunched();
+              }}
+            ></Button>
+          </View>
         </View>
       </Modal>
       <Text style={styles.text}>Dina böcker</Text>
@@ -101,5 +110,10 @@ const styles = StyleSheet.create({
   },
   listContent: {
     paddingBottom: 24,
+  },
+  buttonContainer: {
+    marginTop: 20,
+    gap: 10,
+    width: "40%",
   },
 });
