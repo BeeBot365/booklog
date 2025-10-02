@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, TextInput, View } from "react-native";
 import * as Haptics from "expo-haptics";
 import Toast from "react-native-toast-message";
+import { fetchBooks } from "@/src/api/googleBooks";
 
 export default function SearchScreen() {
   const { addBookToContext, books } = useBooksContext();
@@ -25,6 +26,14 @@ export default function SearchScreen() {
     setFilteredBooks(filtered);
   }
 
+  async function handleSearch() {
+    const search = value.trim();
+    if (!search) return;
+    const apiBooks = await fetchBooks(search, 0);
+    const notOwned = apiBooks.filter((b) => !books.some((x) => x.id === b.id));
+    setFilteredBooks(notOwned);
+  }
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -32,10 +41,9 @@ export default function SearchScreen() {
         placeholder="Search book by title.."
         placeholderTextColor="#888"
         onChangeText={setValue}
-        onSubmitEditing={() => {
-          console.log("Searching for:", value);
-        }}
+        onSubmitEditing={handleSearch}
         value={value}
+        returnKeyType="search"
       ></TextInput>
       <FlatList
         data={filteredBooks}
@@ -49,7 +57,7 @@ export default function SearchScreen() {
             book={item}
             buttons={[
               {
-                variant: "gray",
+                variant: "blue",
                 padding: 0,
                 fontSize: 16,
                 value: "Läs mer",
@@ -63,7 +71,7 @@ export default function SearchScreen() {
                 },
               },
               {
-                variant: "gray",
+                variant: "blue",
                 padding: 0,
                 fontSize: 16,
                 value: "Lägg till",
