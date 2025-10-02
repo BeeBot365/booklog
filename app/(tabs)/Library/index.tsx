@@ -18,7 +18,7 @@ export default function HomeScreen() {
   useEffect(() => {
     // Kollar om det är första gången appen startar
     async function checkFirstLaunch() {
-      await resetHasLaunched();
+      // await resetHasLaunched();
       const firstLaunch = await gethasLaunched();
       if (!firstLaunch) {
         setShowReminderModal(true);
