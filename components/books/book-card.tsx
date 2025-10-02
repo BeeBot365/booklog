@@ -6,22 +6,38 @@ import Button, { ButtonObject } from "../ui/button";
 interface Props {
   book: Book;
   buttons: ButtonObject[];
+  owned?: boolean;
 }
-export default function BookCard({ book, buttons }: Props) {
-  const { addBookToContext } = useBooksContext();
+
+export default function BookCard({ book, buttons, owned }: Props) {
   return (
     <View style={styles.cardContainer}>
       <View style={styles.imageWrapper}>
         <Image
           resizeMode="cover"
           style={styles.image}
-          source={{ uri: book.imageUrl }}
+          source={{
+            uri:
+              book.imageUrl ??
+              "https://via.placeholder.com/300x450?text=No+Cover",
+          }}
         />
+        {owned && (
+          <View style={styles.ownedBadge}>
+            <Text style={styles.ownedBadgeText}>I biblioteket</Text>
+          </View>
+        )}
       </View>
+
       <View style={styles.textContainer}>
-        <Text style={styles.titleText}>{book.title}</Text>
-        <Text>{book.authors.map((author) => author.name).join(", ")}</Text>
+        <Text style={styles.titleText} numberOfLines={2} ellipsizeMode="tail">
+          {book.title}
+        </Text>
+        <Text style={styles.authorText} numberOfLines={1} ellipsizeMode="tail">
+          {book.authors.map((a) => a.name).join(", ")}
+        </Text>
       </View>
+
       <View style={styles.buttonContainer}>
         {buttons.map((button, index) => (
           <Button key={index} {...button} />
@@ -33,42 +49,69 @@ export default function BookCard({ book, buttons }: Props) {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    width: 150,
-    minHeight: 350,
-    margin: 20,
-    borderRadius: 10,
-    borderColor: "black",
-    backgroundColor: "white",
+    width: 180,
+    minHeight: 380,
+    margin: 12,
+    borderRadius: 14,
+    backgroundColor: "#fff",
+
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 4,
   },
+
   imageWrapper: {
     overflow: "hidden",
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    height: 180,
+    borderTopLeftRadius: 14,
+    borderTopRightRadius: 14,
+    backgroundColor: "#f3f3f3",
   },
 
   image: {
     width: "100%",
-    height: "100%",
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    aspectRatio: 2 / 3,
   },
 
   textContainer: {
-    margin: 5,
+    paddingHorizontal: 12,
+    paddingTop: 10,
   },
 
   titleText: {
-    fontWeight: "bold",
+    fontWeight: "700",
     fontSize: 16,
+    lineHeight: 20,
+  },
+
+  authorText: {
+    marginTop: 4,
+    fontSize: 13,
+    color: "#666",
   },
 
   buttonContainer: {
-    width: 100,
-    margin: 5,
-    alignSelf: "center",
-    justifyContent: "flex-end",
-    flex: 1,
-    marginBottom: 15,
+    paddingHorizontal: 12,
+    paddingBottom: 14,
+    paddingTop: 10,
+    gap: 3,
+    alignSelf: "stretch",
+  },
+
+  ownedBadge: {
+    position: "absolute",
+    top: 8,
+    right: 8,
+    backgroundColor: "#185abc",
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 999,
+  },
+
+  ownedBadgeText: {
+    color: "#fff",
+    fontSize: 11,
+    fontWeight: "700",
   },
 });
