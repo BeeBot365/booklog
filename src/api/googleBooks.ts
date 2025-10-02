@@ -10,6 +10,9 @@ export async function fetchBooks(title: string, startIndex: number = 0) {
       `${BASE_URL}intitle:${title}&maxResults=${MAX_RESULTS}&startIndex=${startIndex}`
     );
     const data: any = await response.json();
+
+    if (!data.items) return [];
+
     const books: Book[] = data.items.map((item: any) => ({
       id: item.id,
       title: item.volumeInfo.title,
@@ -29,12 +32,26 @@ export async function fetchBooks(title: string, startIndex: number = 0) {
   }
 }
 
-// Mappa om datan till vårt Book interface
-// const books: Book[] = data.items.map((item: any) => ({
-//   id: item.id,
-//   title: item.volumeInfo.title,
-//   description: item.volumeInfo.description,
-//   authors: item.volumeInfo.authors || [],
-//   publishedDate: item.volumeInfo.publishedDate,
-//   thumbnail: item.volumeInfo.imageLinks?.thumbnail,
-// }));
+const BOOK_BY_ID_URL = "https://www.googleapis.com/books/v1/volumes/";
+
+export async function fetchBookById(id: string): Promise<Book | null> {
+  try {
+    const res = await fetch(`${BOOK_BY_ID_URL}${id}`);
+    const data = await res.json();
+    if (!data || data.error) return null;
+
+    return {
+      id: data.id,
+      title: data.volumeInfo?.title ?? "No title",
+      description: data.volumeInfo?.description ?? "No description available",
+      authors: data.volumeInfo?.authors?.map((name: string) => ({ name })) ?? [
+        { name: "Unknown Author" },
+      ],
+      imageUrl: data.volumeInfo?.imageLinks?.thumbnail ?? "",
+      infoUrl: data.volumeInfo?.infoLink ?? "",
+      numberOfPages: data.volumeInfo?.pageCount ?? 0,
+    };
+  } catch {
+    return null;
+  }
+}
