@@ -1,50 +1,34 @@
-# Welcome to your Expo app 👋
+# BookApp
+En bokapp där man kan söka böcker från googles bok api och spara de man vill läsa till sitt egna "bibliotet".
+I framtiden ska det också gå att logga böckerna man läser så man ser sina framsteg med en bok.
+Finns även en funktion för att få läspåminnelser varje dag.
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## 4 utvalda RN-komponeter använda i projektet.
+* Flatlist, för att lätt kunna rendera listor.
+* Image, för att visa bilder.
+* Switch, för enkelt kunna toggla av och på läspåminnelser.
+* Modal, även där för att fråga om man vill lägga till läspåminnelse.
 
-## Get started
+## 4 utvalda Expo-komponenter.
+* SQLite, för att kunna spara böcker/data i appen.
+* SecureStore, även där för att spara data men i enklare form.
+* WebBrowser, för att prata med webläsaren och öppna mer info om en bok.
+* Router, enkelt navigera mellan skärmar.
 
-1. Install dependencies
+## Kravlista
+Projektet använder minst 4 stycken RN-komponenter och 4 stycken Expo-komponter[x]
+De utvalda komponenterna MÅSTE antecknas i README filen tillsammans med en
+lista över genomförda krav.[x]
+React Navigation används för att skapa en bättre upplevelse i appen.[x]
+Git & GitHub har använts[x]
+Projektmappen innehåller en README.md fil [x]
+Uppgiften lämnas in i tid![x]
+Muntlig presentation är genomförd[x]
 
-   ```bash
-   npm install
-   ```
 
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Setup
+1. Installera beroenden med:  npm install
+2. Lägg til en `.env`-fil i projektroten med följande innehåll:
+EXPO_PUBLIC_GOOGLE_BOOKS_API_KEY="DIN_API_KEY_HÄR"
+Fråga mig om api nyckel eller skapa en i google cloud för att prata med google books apiet.
+3. Kör igång projektet med npm run start.
