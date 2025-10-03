@@ -3,14 +3,15 @@ import { Book } from "../db/books/data/book.types";
 // Här ska vi hämta data från api:et och mappa om det till vårt Book interface.
 const BASE_URL = "https://www.googleapis.com/books/v1/volumes?q=";
 const MAX_RESULTS = 10;
+const apiKey = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
 
 export async function fetchBooks(title: string, startIndex: number = 0) {
   try {
     const response = await fetch(
-      `${BASE_URL}intitle:${title}&maxResults=${MAX_RESULTS}&startIndex=${startIndex}`
+      `${BASE_URL}intitle:${title}&maxResults=${MAX_RESULTS}&startIndex=${startIndex}&key=${apiKey}`
     );
-    const data: any = await response.json();
 
+    const data: any = await response.json();
     if (!data.items) return [];
 
     const books: Book[] = data.items.map((item: any) => ({
@@ -24,7 +25,6 @@ export async function fetchBooks(title: string, startIndex: number = 0) {
       infoUrl: item.volumeInfo.infoLink || "",
       numberOfPages: item.volumeInfo.pageCount || 0,
     }));
-    console.log(books);
     return books;
   } catch (error) {
     console.error("Error fetching books:", error);
