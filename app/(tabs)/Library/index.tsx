@@ -10,7 +10,15 @@ import {
 } from "@/src/securestore/launched";
 import { useEffect, useState } from "react";
 import Button from "@/components/ui/button";
-
+import * as Notifications from "expo-notifications";
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+    shouldShowBanner: true,
+    shouldShowList: true,
+  }),
+});
 export default function HomeScreen() {
   const { books } = useBooksContext();
   const [showReminderModal, setShowReminderModal] = useState(false);
