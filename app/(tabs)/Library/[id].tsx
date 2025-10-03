@@ -25,14 +25,13 @@ export default function DetailsScreen() {
   const router = useRouter();
 
   useEffect(() => {
-    const theId = Array.isArray(id) ? id[0] : id;
-    const b = theId ? getbookById?.(theId as string) : undefined;
-    if (!b) {
+    const fetchedBook = getbookById(id as string);
+    if (!fetchedBook) {
       router.back();
       return;
     }
-    setBook(b);
-    nav.setOptions({ title: b.title });
+    setBook(fetchedBook);
+    nav.setOptions({ title: fetchedBook.title });
   }, [id]);
 
   if (!book) return null;
@@ -94,8 +93,16 @@ export default function DetailsScreen() {
 }
 
 const styles = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: "#fff" },
-  content: { padding: 18, paddingBottom: 24, alignItems: "center", gap: 10 },
+  screen: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+  content: {
+    padding: 18,
+    paddingBottom: 24,
+    alignItems: "center",
+    gap: 10,
+  },
 
   coverWrap: {
     borderRadius: 12,
@@ -106,7 +113,11 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 8 },
     elevation: 5,
   },
-  cover: { width: 180, aspectRatio: 2 / 3, borderRadius: 12 },
+  cover: {
+    width: 180,
+    aspectRatio: 2 / 3,
+    borderRadius: 12,
+  },
 
   title: {
     marginTop: 12,
@@ -128,7 +139,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#eee",
     marginVertical: 8,
   },
-  description: { width: "100%", fontSize: 15, lineHeight: 22, color: "#333" },
+  description: {
+    width: "100%",
+    fontSize: 15,
+    lineHeight: 22,
+    color: "#333",
+  },
 
-  buttonStack: { width: "100%", gap: 8, marginTop: 8 },
+  buttonStack: {
+    width: "100%",
+    gap: 8,
+    marginTop: 8,
+  },
 });
